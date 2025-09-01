@@ -1,72 +1,69 @@
 package calculadora;
 
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
-
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
-@DisplayName("Classe para teste da calculadora")
 public class CalculadoraTest {
-	
-	private Calculadora calc;
-	
-	@BeforeEach
-	public void inicializa() {
-		calc = new Calculadora();
-	}
-	
-	@DisplayName("Testa a soma de dois numeros")
-	@Test
-	public void testSomaDoisNumeros() {
-		int soma = calc.soma(4, 5);		
-		Assertions.assertEquals(9, soma);		
-	}
-	
-	@Test
-	public void testDivisaoDoisNumeros() {
-		int divisao = calc.divisao(8, 4);
-		assertTrue(divisao == 2);
-	}
-	
-	@Test
-	public void testDivisaoPorZero() {
-		try {
-			int divisao = calc.divisao(8, 0);
-			fail("Excecao noo lancada");
-		}catch (ArithmeticException e) {
-			assertEquals("/ by zero", e.getMessage());
-		}		
-	}
-	
-	@Test
-	public void testDivisaoPorZeroComAssertThrows() {
-		assertThrows(ArithmeticException.class,
-				() -> calc.divisao(8, 0));
-	}
-	
-	@Test
-	public void testeSubtracao() {
-		int resultado = calc.subtracao(10, 3);
-		assertEquals(7, resultado);
-	}
-	
-	@Test
-	public void testeMultiplicacao() {
-		int valor = calc.multiplicacao(5, 4);
-		assertEquals(20, valor);
-	}
-	
-	@Test
-	public void testeSoma() {
-		int total = calc.somatoria(3);
-		assertEquals(6, total);
-	}
-	
 
+    @Test
+    public void testSoma() {
+        Calculadora calc = new Calculadora();
+        assertEquals(5, calc.soma(2, 3));
+        assertEquals(0, calc.soma(0, 0));
+        assertEquals(-1, calc.soma(-2, 1));
+    }
+
+    @Test
+    public void testSubtracao() {
+        Calculadora calc = new Calculadora();
+        assertEquals(1, calc.subtracao(3, 2));
+        assertEquals(0, calc.subtracao(0, 0));
+        assertEquals(-3, calc.subtracao(-2, 1));
+    }
+
+    @Test
+    public void testMultiplicacao() {
+        Calculadora calc = new Calculadora();
+        assertEquals(6, calc.multiplicacao(2, 3));
+        assertEquals(0, calc.multiplicacao(0, 5));
+        assertEquals(-2, calc.multiplicacao(-1, 2));
+    }
+
+    @Test
+    public void testDivisao() {
+        Calculadora calc = new Calculadora();
+        assertEquals(2, calc.divisao(6, 3));
+        assertEquals(0, calc.divisao(0, 5));
+        assertEquals(-2, calc.divisao(-4, 2));
+    }
+
+    @Test
+    public void testDivisaoPorZero() {
+        Calculadora calc = new Calculadora();
+        assertThrows(ArithmeticException.class, () -> calc.divisao(5, 0));
+    }
+
+    @Test
+    public void testSomatoria() {
+        Calculadora calc = new Calculadora();
+        assertEquals(6, calc.somatoria(3)); // 3+2+1+0
+        assertEquals(0, calc.somatoria(0));
+        assertEquals(0, calc.somatoria(-1)); // Negativo retorna 0
+    }
+
+    @Test
+    public void testEhPositivo() {
+        Calculadora calc = new Calculadora();
+        assertTrue(calc.ehPositivo(0));
+        assertTrue(calc.ehPositivo(5));
+        assertFalse(calc.ehPositivo(-1));
+    }
+
+    @Test
+    public void testCompara() {
+        Calculadora calc = new Calculadora();
+        assertEquals(0, calc.compara(2, 2));
+        assertEquals(1, calc.compara(3, 2));
+        assertEquals(-1, calc.compara(1, 2));
+    }
 }

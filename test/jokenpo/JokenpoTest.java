@@ -1,70 +1,85 @@
 package jokenpo;
 
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class JokenpoTest {
 
-    //papel (1) x papel (1) : 0
-    //papel (1) x tesoura (3) : 2
-    //papel (1) x pedra (2) : 1
+    @Test
+    public void testEmpatePapel() {
+        Jokenpo jkp = new Jokenpo();
+        assertEquals(0, jkp.jogar(1, 1));
+    }
 
-    //tesoura (3) x tesoura (3) : 0
-    //tesoura (3) x pedra (2) : 2
+    @Test
+    public void testEmpatePedra() {
+        Jokenpo jkp = new Jokenpo();
+        assertEquals(0, jkp.jogar(2, 2));
+    }
 
-    // pedra (2) x pedra (2) : 0
+    @Test
+    public void testEmpateTesoura() {
+        Jokenpo jkp = new Jokenpo();
+        assertEquals(0, jkp.jogar(3, 3));
+    }
 
-    Jokenpo jkp;
+    @Test
+    public void testPapelVencePedra() {
+        Jokenpo jkp = new Jokenpo();
+        assertEquals(1, jkp.jogar(1, 2));
+    }
 
-    @BeforeEach
-	public void setUp() {
-		jkp = new Jokenpo();
-	}
+    @Test
+    public void testPedraVenceTesoura() {
+        Jokenpo jkp = new Jokenpo();
+        assertEquals(1, jkp.jogar(2, 3));
+    }
 
-    @DisplayName("Testa Papel/Papel")
-	@Test
-	public void testPapelEmpate() {
-		int resposta = jkp.jogar(1, 1);
-		assertEquals(0, resposta);
-	}
+    @Test
+    public void testTesouraVencePapel() {
+        Jokenpo jkp = new Jokenpo();
+        assertEquals(1, jkp.jogar(3, 1));
+    }
 
-    @DisplayName("Testa Papel/Tesoura")
-	@Test
-	public void testPapelTesoura() {
-		int resposta = jkp.jogar(1, 3);
-		assertEquals(2, resposta);
-	}
+    @Test
+    public void testPedraPerdeParaPapel() {
+        Jokenpo jkp = new Jokenpo();
+        assertEquals(2, jkp.jogar(2, 1));
+    }
 
-    @DisplayName("Testa Papel/Pedra")
-	@Test
-	public void testPapelPedra() {
-		int resposta = jkp.jogar(1, 2);
-		assertEquals(1, resposta);
-	}
+    @Test
+    public void testTesouraPerdeParaPedra() {
+        Jokenpo jkp = new Jokenpo();
+        assertEquals(2, jkp.jogar(3, 2));
+    }
 
-    @DisplayName("Testa Tesoura/Tesoura")
-	@Test
-	public void testTesouraEmpate() {
-		int resposta = jkp.jogar(3, 3);
-		assertEquals(0, resposta);
-	}
-    
+    @Test
+    public void testPapelPerdeParaTesoura() {
+        Jokenpo jkp = new Jokenpo();
+        assertEquals(2, jkp.jogar(1, 3));
+    }
 
-    @DisplayName("Testa Tesoura/Pedra")
-	@Test
-	public void testTesouraPedra() {
-		int resposta = jkp.jogar(3, 2);
-		assertEquals(2, resposta);
-	}
+    @Test
+    public void testOpcaoInvalidaJogador1() {
+        Jokenpo jkp = new Jokenpo();
+        assertEquals(-1, jkp.jogar(0, 1));
+        assertEquals(-1, jkp.jogar(4, 2));
+        assertEquals(-1, jkp.jogar(-1, 3));
+    }
 
-    @DisplayName("Testa Tesoura/Pedra")
-	@Test
-	public void testPedraEmpate() {
-		int resposta = jkp.jogar(2, 2);
-		assertEquals(0, resposta);
-	}
+    @Test
+    public void testOpcaoInvalidaJogador2() {
+        Jokenpo jkp = new Jokenpo();
+        assertEquals(-1, jkp.jogar(1, 0));
+        assertEquals(-1, jkp.jogar(2, 4));
+        assertEquals(-1, jkp.jogar(3, -1));
+    }
+
+    @Test
+    public void testAmbosInvalidos() {
+        Jokenpo jkp = new Jokenpo();
+        assertEquals(-1, jkp.jogar(0, 0));
+        assertEquals(-1, jkp.jogar(4, 4));
+        assertEquals(-1, jkp.jogar(-1, -1));
+    }
 }
